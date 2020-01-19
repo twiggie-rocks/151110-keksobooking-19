@@ -1,7 +1,7 @@
 # Личный проект «Кексобукинг» [![Build status][travis-image]][travis-url]
 
 * Студент: [Вета Иванченко](https://up.htmlacademy.ru/javascript/19/user/151110).
-* Наставник: `Неизвестно`.
+* Наставник: [Алексей Дорофеев](https://htmlacademy.ru/profile/id299055).
 
 ---
 
