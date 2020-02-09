@@ -40,9 +40,8 @@ var generateRandomArray = function (arr) {
 
 // создать массив с объектами
 
-var similarOffers = [];
-
 var generateSimilarOffers = function () {
+  var offers = [];
   for (var i = 0; i < 8; i++) {
     var similarOffer = {
       author: {
@@ -66,13 +65,13 @@ var generateSimilarOffers = function () {
         y: generateRandomNumber(130, 630)
       }
     };
-    similarOffers.push(similarOffer);
+    offers.push(similarOffer);
   }
 
-  return similarOffers;
+  return offers;
 };
 
-generateSimilarOffers();
+var similarOffers = generateSimilarOffers();
 
 // показать карту
 
