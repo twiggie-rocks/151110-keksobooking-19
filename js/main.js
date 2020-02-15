@@ -73,10 +73,6 @@ var generateSimilarOffers = function () {
 
 var similarOffers = generateSimilarOffers();
 
-// показать карту
-
-document.querySelector('.map').classList.remove('map--faded');
-
 // создать DOM-элементы для меток на карте
 
 var pinTemplate = document.querySelector('#pin').content;
@@ -107,3 +103,89 @@ for (var i = 0; i < similarOffers.length; i++) {
 }
 
 mapPins.appendChild(fragment);
+
+// в неактивном режиме все поля формы заблокированы
+
+var adForm = document.querySelector('.ad-form');
+var adFormFields = adForm.children;
+
+for (var j = 0; j < adFormFields.length; j++) {
+  adFormFields[j].setAttribute('disabled', 'true');
+}
+
+// в неактивном состоянии в поле адреса подставляются координаты центра метки
+
+var MAIN_PIN_WIDTH = 65;
+var MAIN_PIN_HEIGHT = 65;
+
+var MAIN_PIN_ACTIVE_HEIGHT = 87;
+
+var MAIN_PIN_X = 570;
+var MAIN_PIN_Y = 375;
+
+var mainPinXCoordinate = Math.round(MAIN_PIN_X + MAIN_PIN_WIDTH / 2);
+var mainPinYCoordinate = Math.round(MAIN_PIN_Y + MAIN_PIN_HEIGHT / 2);
+
+var addressField = adForm.querySelector('#address');
+
+var setAddress = function () {
+  addressField.value = mainPinXCoordinate + ', ' + mainPinYCoordinate;
+};
+
+setAddress();
+
+// проверка на соответствие числа комнат числу гостей
+
+var adFormRoomNumber = adForm.querySelector('#room_number');
+var adFormCapacity = adForm.querySelector('#capacity');
+
+var checkCapacityValidity = function () {
+  var adFormRoomNumberValue = Number(adFormRoomNumber.value);
+  var adFormCapacityValue = Number(adFormCapacity.value);
+
+  if (adFormRoomNumberValue < adFormCapacityValue && adFormRoomNumberValue !== 100) {
+    adFormCapacity.setCustomValidity('Гостей не может быть больше, чем комнат');
+  } else if (adFormRoomNumberValue === 100 && adFormCapacityValue !== 0) {
+    adFormCapacity.setCustomValidity('100-комнатные квартиры — не для гостей');
+  } else {
+    adFormCapacity.setCustomValidity('');
+  }
+};
+
+adFormRoomNumber.addEventListener('change', function () {
+  checkCapacityValidity();
+});
+
+adFormCapacity.addEventListener('change', function () {
+  checkCapacityValidity();
+});
+
+// перевод страницы в активное состояние
+
+var mainPin = mapPins.querySelector('.map__pin--main');
+
+var activateWindow = function () {
+  document.querySelector('.map').classList.remove('map--faded');
+  adForm.classList.remove('ad-form--disabled');
+
+  for (var k = 0; k < adFormFields.length; k++) {
+    adFormFields[k].removeAttribute('disabled');
+  }
+
+  mainPinYCoordinate = MAIN_PIN_Y + MAIN_PIN_ACTIVE_HEIGHT;
+  setAddress();
+
+  checkCapacityValidity();
+};
+
+mainPin.addEventListener('mousedown', function (evt) {
+  if (evt.button === 0) {
+    activateWindow();
+  }
+});
+
+mainPin.addEventListener('keydown', function (evt) {
+  if (evt.key === 'Enter') {
+    activateWindow();
+  }
+});
