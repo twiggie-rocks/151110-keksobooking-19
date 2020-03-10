@@ -3,7 +3,7 @@
 (function () {
   var URL = 'https://js.dump.academy/keksobooking/data';
 
-  window.load = function (onSuccess) {
+  var getData = function (onSuccess) {
     var xhr = new XMLHttpRequest();
     xhr.responseType = 'json';
 
@@ -14,5 +14,9 @@
     });
 
     xhr.send();
+  };
+
+  window.load = {
+    getData: getData,
   };
 })();

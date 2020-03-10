@@ -22,6 +22,8 @@
     window.form.setAddress();
 
     window.form.checkCapacityValidity();
+
+    window.load.getData(window.filter.loadSuccessful);
   };
 
   mainPin.addEventListener('mousedown', function (evt) {
