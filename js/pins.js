@@ -23,9 +23,16 @@
 
   // отрисовка пинов
 
-  var loadSuccessful = function (similarOffers) {
+  var renderPins = function (similarOffers) {
     var fragment = document.createDocumentFragment();
     var mapPins = document.querySelector('.map__pins');
+    var oldPins = mapPins.querySelectorAll('.map__pin');
+
+    // удаляем предыдущие пины перед отрисовкой новых
+
+    for (var n = 1; n < oldPins.length; n++) {
+      oldPins[n].remove();
+    }
 
     for (var i = 0; i < similarOffers.length; i++) {
       fragment.appendChild(createPin(similarOffers[i]));
@@ -34,5 +41,7 @@
     mapPins.appendChild(fragment);
   };
 
-  window.load(loadSuccessful);
+  window.pins = {
+    renderPins: renderPins,
+  };
 })();
