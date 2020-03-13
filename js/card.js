@@ -1,6 +1,9 @@
 'use strict';
 
 (function () {
+  var ESC_KEY = 'Escape';
+  var ENTER_KEY = 'Enter';
+
   // создание DOM-элемента карточки
 
   var cardTemplate = document.querySelector('#card').content;
@@ -76,21 +79,62 @@
     return newCard;
   };
 
-  // если данных для заполнения не хватает, соответствующий блок скрывается
+  // скрытие карточки
+
+  var hideCard = function () {
+    var oldCard = document.querySelector('.map__card');
+    if (oldCard) {
+      oldCard.remove();
+    }
+  };
 
   // отрисовка карточки
 
   var renderCard = function (offerInfo) {
+    hideCard();
+
     var fragment = document.createDocumentFragment();
     var map = document.querySelector('.map');
     var mapFilter = document.querySelector('.map__filters-container');
 
-    fragment.appendChild(createCard(offerInfo[0]));
+    fragment.appendChild(createCard(offerInfo));
 
     map.insertBefore(fragment, mapFilter);
+
+    var cardClose = map.querySelector('.popup__close');
+
+    cardClose.addEventListener('click', function () {
+      hideCard();
+    });
+
+    document.addEventListener('keydown', function (evt) {
+      if (evt.key === ESC_KEY) {
+        hideCard();
+      }
+    });
+  };
+
+  // открытие карточки по клику на пин
+
+  var getPins = function (offers) {
+    var mapPins = Array.from(document.querySelectorAll('.map__pin'));
+    mapPins.shift();
+
+    mapPins.forEach(function (pin, index) {
+      pin.addEventListener('click', function () {
+        renderCard(offers[index]);
+      });
+
+      pin.addEventListener('keydown', function (evt) {
+        if (evt.key === ENTER_KEY) {
+          renderCard(offers[index]);
+        }
+      });
+    });
   };
 
   window.card = {
     renderCard: renderCard,
+    getPins: getPins
   };
 }());

@@ -39,6 +39,9 @@
     }
 
     mapPins.appendChild(fragment);
+
+    // сохраняем пины в массив для дальнейшего использования
+    window.card.getPins(similarOffers);
   };
 
   window.pins = {

@@ -24,8 +24,6 @@
     window.form.checkCapacityValidity();
 
     window.load.getData(window.filter.loadSuccessful);
-
-    window.load.getData(window.card.renderCard);
   };
 
   mainPin.addEventListener('mousedown', function (evt) {
