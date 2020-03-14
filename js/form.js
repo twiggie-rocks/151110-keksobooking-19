@@ -10,25 +10,6 @@
     adFormFields[j].setAttribute('disabled', 'true');
   }
 
-  // в неактивном состоянии в поле адреса подставляются координаты центра метки
-
-  var MAIN_PIN_WIDTH = 65;
-  var MAIN_PIN_HEIGHT = 65;
-
-  var MAIN_PIN_X = 570;
-  var MAIN_PIN_Y = 375;
-
-  var mainPinXCoordinate = Math.round(MAIN_PIN_X + MAIN_PIN_WIDTH / 2);
-  var mainPinYCoordinate = Math.round(MAIN_PIN_Y + MAIN_PIN_HEIGHT / 2);
-
-  var addressField = adForm.querySelector('#address');
-
-  var setAddress = function () {
-    addressField.value = mainPinXCoordinate + ', ' + mainPinYCoordinate;
-  };
-
-  setAddress();
-
   // проверка на соответствие числа комнат числу гостей
 
   var adFormRoomNumber = adForm.querySelector('#room_number');
@@ -86,8 +67,6 @@
   });
 
   window.form = {
-    mainPinYCoordinate: mainPinYCoordinate,
-    setAddress: setAddress,
     checkCapacityValidity: checkCapacityValidity,
   };
 })();
