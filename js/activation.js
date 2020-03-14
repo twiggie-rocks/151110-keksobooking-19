@@ -3,9 +3,6 @@
 (function () {
   // перевод страницы в активное состояние
 
-  var MAIN_PIN_ACTIVE_HEIGHT = 87;
-  var MAIN_PIN_ACTIVE_Y = 375;
-
   var mainPin = document.querySelector('.map__pin--main');
   var adForm = document.querySelector('.ad-form');
   var adFormFields = adForm.children;
@@ -18,23 +15,32 @@
       adFormFields[k].removeAttribute('disabled');
     }
 
-    window.form.mainPinYCoordinate = MAIN_PIN_ACTIVE_Y + MAIN_PIN_ACTIVE_HEIGHT;
-    window.form.setAddress();
+    window.mainPin.setAddress(window.mainPin.activeX, window.mainPin.activeY);
 
     window.form.checkCapacityValidity();
 
     window.load.getData(window.filter.loadSuccessful);
+
+    mainPin.removeEventListener('mousedown', onMouseDown);
+    mainPin.removeEventListener('keydown', onKeyDown);
   };
 
-  mainPin.addEventListener('mousedown', function (evt) {
+  var onMouseDown = function (evt) {
+    evt.preventDefault();
+
     if (evt.button === 0) {
       activateWindow();
     }
-  });
+  };
 
-  mainPin.addEventListener('keydown', function (evt) {
+  var onKeyDown = function (evt) {
+    evt.preventDefault();
+
     if (evt.key === 'Enter') {
       activateWindow();
     }
-  });
+  };
+
+  mainPin.addEventListener('mousedown', onMouseDown);
+  mainPin.addEventListener('keydown', onKeyDown);
 })();
