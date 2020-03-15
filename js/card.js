@@ -135,6 +135,7 @@
 
   window.card = {
     renderCard: renderCard,
-    getPins: getPins
+    getPins: getPins,
+    hideCard: hideCard
   };
 }());

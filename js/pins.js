@@ -21,18 +21,23 @@
     return newPin;
   };
 
+  // удаление ранее выведенных пинов
+
+  var removePins = function () {
+    var oldPins = document.querySelectorAll('.map__pin');
+
+    for (var n = 1; n < oldPins.length; n++) {
+      oldPins[n].remove();
+    }
+  };
+
   // отрисовка пинов
 
   var renderPins = function (similarOffers) {
     var fragment = document.createDocumentFragment();
     var mapPins = document.querySelector('.map__pins');
-    var oldPins = mapPins.querySelectorAll('.map__pin');
 
-    // удаляем предыдущие пины перед отрисовкой новых
-
-    for (var n = 1; n < oldPins.length; n++) {
-      oldPins[n].remove();
-    }
+    removePins();
 
     for (var i = 0; i < similarOffers.length; i++) {
       fragment.appendChild(createPin(similarOffers[i]));
@@ -45,6 +50,7 @@
   };
 
   window.pins = {
+    removePins: removePins,
     renderPins: renderPins,
   };
 })();

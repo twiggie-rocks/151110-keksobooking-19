@@ -22,6 +22,13 @@
   var activeX = Math.round(PinCoordinates.X + PinCoordinates.ACTIVE_WIDTH / 2);
   var activeY = Math.round(PinCoordinates.Y + PinCoordinates.ACTIVE_HEIGHT);
 
+  // положение пина по умолчанию
+
+  var setDefaultCoords = function () {
+    pin.style.left = PinCoordinates.X + 'px';
+    pin.style.top = PinCoordinates.Y + 'px';
+  };
+
   // расчет координат в поле адреса
 
   var setAddress = function (x, y) {
@@ -63,12 +70,12 @@
 
       // ограничение площади перемещения пина
 
-      if (finalCoords.y >= PinCoordinates.MIN_Y - PinCoordinates.ACTIVE_HEIGHT && finalCoords.y <= PinCoordinates.MAX_Y - PinCoordinates.ACTIVE_HEIGHT) {
-        pin.style.top = finalCoords.y + 'px';
-      }
-
       if (finalCoords.x >= PinCoordinates.MIN_X - PinCoordinates.WIDTH / 2 && finalCoords.x <= PinCoordinates.MAX_X - PinCoordinates.WIDTH / 2) {
         pin.style.left = finalCoords.x + 'px';
+      }
+
+      if (finalCoords.y >= PinCoordinates.MIN_Y - PinCoordinates.ACTIVE_HEIGHT && finalCoords.y <= PinCoordinates.MAX_Y - PinCoordinates.ACTIVE_HEIGHT) {
+        pin.style.top = finalCoords.y + 'px';
       }
 
       var draggedX = Math.round(finalCoords.x + PinCoordinates.ACTIVE_WIDTH / 2);
@@ -89,8 +96,11 @@
   });
 
   window.mainPin = {
+    inactiveX: inactiveX,
+    inactiveY: inactiveY,
     activeX: activeX,
     activeY: activeY,
-    setAddress: setAddress
+    setAddress: setAddress,
+    setDefaultCoords: setDefaultCoords
   };
 }());

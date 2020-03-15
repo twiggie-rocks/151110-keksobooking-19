@@ -4,11 +4,15 @@
   // в неактивном режиме все поля формы заблокированы
 
   var adForm = document.querySelector('.ad-form');
-  var adFormFields = adForm.children;
+  var adFormFields = Array.from(adForm.children);
 
-  for (var j = 0; j < adFormFields.length; j++) {
-    adFormFields[j].setAttribute('disabled', 'true');
-  }
+  var disableFormFields = function () {
+    adFormFields.forEach(function (field) {
+      field.setAttribute('disabled', 'true');
+    });
+  };
+
+  disableFormFields();
 
   // проверка на соответствие числа комнат числу гостей
 
@@ -66,7 +70,15 @@
     price.min = housingTypeToPrice[housingType.value];
   });
 
+  // отправка формы
+
+  adForm.addEventListener('submit', function (evt) {
+    evt.preventDefault();
+    window.upload.sendData(new FormData(adForm), window.upload.onSuccess, window.upload.onError);
+  });
+
   window.form = {
     checkCapacityValidity: checkCapacityValidity,
+    disableFormFields: disableFormFields
   };
 })();
