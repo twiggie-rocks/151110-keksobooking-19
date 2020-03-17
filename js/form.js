@@ -1,6 +1,8 @@
 'use strict';
 
 (function () {
+  var ENTER_KEY = 'Enter';
+
   // в неактивном режиме все поля формы заблокированы
 
   var adForm = document.querySelector('.ad-form');
@@ -79,10 +81,21 @@
 
   // сброс полей формы
 
-  adForm.addEventListener('reset', function (evt) {
+  var adFormReset = adForm.querySelector('.ad-form__reset');
+
+  var onClickReset = function (evt) {
     evt.preventDefault();
     window.activation.deactivateWindow();
-  });
+  };
+
+  var onKeydownReset = function (evt) {
+    evt.preventDefault();
+    if (evt.key === ENTER_KEY) {
+      window.activation.deactivateWindow();
+    }
+  };
+
+  adFormReset.addEventListener('click', onClickReset);
 
   window.form = {
     checkCapacityValidity: checkCapacityValidity,

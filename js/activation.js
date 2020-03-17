@@ -1,6 +1,9 @@
 'use strict';
 
 (function () {
+  var LEFT_MOUSE_BTN = 0;
+  var ENTER_KEY = 'Enter';
+
   // перевод страницы в активное состояние
 
   var map = document.querySelector('.map');
@@ -29,7 +32,7 @@
   var onMouseDown = function (evt) {
     evt.preventDefault();
 
-    if (evt.button === 0) {
+    if (evt.button === LEFT_MOUSE_BTN) {
       activateWindow();
     }
   };
@@ -37,7 +40,7 @@
   var onKeyDown = function (evt) {
     evt.preventDefault();
 
-    if (evt.key === 'Enter') {
+    if (evt.key === ENTER_KEY) {
       activateWindow();
     }
   };
@@ -47,7 +50,7 @@
 
   // деактивация страницы
 
-  var filter = document.querySelector('.map__filters');
+  var filter = map.querySelector('.map__filters');
 
   var deactivateWindow = function () {
     adForm.reset();

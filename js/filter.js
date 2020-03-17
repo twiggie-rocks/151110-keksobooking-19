@@ -2,6 +2,20 @@
 
 (function () {
   var MAX_OFFERS_NUMBER = 5;
+  var TIMEOUT_INTERVAL = 300;
+
+  // в неактивном режиме фильтр заблокирован
+
+  var mapFilter = document.querySelector('.map__filters');
+  var filterFields = Array.from(mapFilter.children);
+
+  var disableFilter = function () {
+    filterFields.forEach(function (field) {
+      field.setAttribute('disabled', 'true');
+    });
+  };
+
+  disableFilter();
 
   // сохраняем данные, полученные с сервера
 
@@ -13,10 +27,14 @@
     var defaultOffers = window.filter.offers.slice(0, MAX_OFFERS_NUMBER);
     window.pins.renderPins(defaultOffers);
 
+    // разблокировка фильтра
+
+    filterFields.forEach(function (field) {
+      field.removeAttribute('disabled');
+    });
+
     return window.filter.offers;
   };
-
-  var mapFilter = document.querySelector('.map__filters');
 
   // фильтрация по типу жилья
 
@@ -113,7 +131,7 @@
     }
     lastTimeout = window.setTimeout(function () {
       updatePins();
-    }, 300);
+    }, TIMEOUT_INTERVAL);
   };
 
   mapFilter.addEventListener('change', onFilterChange);
