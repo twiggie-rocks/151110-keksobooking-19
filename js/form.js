@@ -96,6 +96,7 @@
   };
 
   adFormReset.addEventListener('click', onClickReset);
+  adFormReset.addEventListener('keydown', onKeydownReset);
 
   window.form = {
     checkCapacityValidity: checkCapacityValidity,
