@@ -24,7 +24,7 @@
 
   // положение пина по умолчанию
 
-  var setDefaultCoords = function () {
+  var setDefautCoordinates = function () {
     pin.style.left = PinCoordinates.X + 'px';
     pin.style.top = PinCoordinates.Y + 'px';
   };
@@ -45,7 +45,7 @@
   pin.addEventListener('mousedown', function (evt) {
     evt.preventDefault();
 
-    var startCoords = {
+    var startCoordinates = {
       x: evt.clientX,
       y: evt.clientY
     };
@@ -54,32 +54,32 @@
       moveEvt.preventDefault();
 
       var shift = {
-        x: startCoords.x - moveEvt.clientX,
-        y: startCoords.y - moveEvt.clientY
+        x: startCoordinates.x - moveEvt.clientX,
+        y: startCoordinates.y - moveEvt.clientY
       };
 
-      startCoords = {
+      startCoordinates = {
         x: moveEvt.clientX,
         y: moveEvt.clientY
       };
 
-      var finalCoords = {
+      var finalCoorinates = {
         x: pin.offsetLeft - shift.x,
         y: pin.offsetTop - shift.y
       };
 
       // ограничение площади перемещения пина
 
-      if (finalCoords.x >= PinCoordinates.MIN_X - PinCoordinates.WIDTH / 2 && finalCoords.x <= PinCoordinates.MAX_X - PinCoordinates.WIDTH / 2) {
-        pin.style.left = finalCoords.x + 'px';
+      if (finalCoorinates.x >= PinCoordinates.MIN_X - PinCoordinates.WIDTH / 2 && finalCoorinates.x <= PinCoordinates.MAX_X - PinCoordinates.WIDTH / 2) {
+        pin.style.left = finalCoorinates.x + 'px';
       }
 
-      if (finalCoords.y >= PinCoordinates.MIN_Y - PinCoordinates.ACTIVE_HEIGHT && finalCoords.y <= PinCoordinates.MAX_Y - PinCoordinates.ACTIVE_HEIGHT) {
-        pin.style.top = finalCoords.y + 'px';
+      if (finalCoorinates.y >= PinCoordinates.MIN_Y - PinCoordinates.ACTIVE_HEIGHT && finalCoorinates.y <= PinCoordinates.MAX_Y - PinCoordinates.ACTIVE_HEIGHT) {
+        pin.style.top = finalCoorinates.y + 'px';
       }
 
-      var draggedX = Math.round(finalCoords.x + PinCoordinates.ACTIVE_WIDTH / 2);
-      var draggedY = Math.round(finalCoords.y + PinCoordinates.ACTIVE_HEIGHT);
+      var draggedX = Math.round(finalCoorinates.x + PinCoordinates.ACTIVE_WIDTH / 2);
+      var draggedY = Math.round(finalCoorinates.y + PinCoordinates.ACTIVE_HEIGHT);
 
       setAddress(draggedX, draggedY);
     };
@@ -101,6 +101,6 @@
     activeX: activeX,
     activeY: activeY,
     setAddress: setAddress,
-    setDefaultCoords: setDefaultCoords
+    setDefautCoordinates: setDefautCoordinates
   };
 }());

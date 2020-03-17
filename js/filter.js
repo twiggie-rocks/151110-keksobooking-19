@@ -88,9 +88,9 @@
     return currentOffer;
   };
 
-  // слушаем переключение опций и создаем отфильтрованный массив
+  // итоговая фильтрация и отрисовка пинов
 
-  var onFilterChange = function () {
+  var updatePins = function () {
     var filteredOffers = window.filter.offers
       .filter(filterByType)
       .filter(filterByPrice)
@@ -99,9 +99,21 @@
       .filter(filterByFeatures)
       .slice(0, MAX_OFFERS_NUMBER);
 
-    // выводим отфильтрованные пины
     window.pins.renderPins(filteredOffers);
     window.card.hideCard();
+  };
+
+  // слушаем переключение опций
+
+  var onFilterChange = function () {
+    var lastTimeout;
+
+    if (lastTimeout) {
+      window.clearTimeout(lastTimeout);
+    }
+    lastTimeout = window.setTimeout(function () {
+      updatePins();
+    }, 300);
   };
 
   mapFilter.addEventListener('change', onFilterChange);

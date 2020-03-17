@@ -57,8 +57,10 @@
     map.classList.add('map--faded');
     adForm.classList.add('ad-form--disabled');
     window.form.disableFormFields();
-    window.mainPin.setDefaultCoords();
+    window.mainPin.setDefautCoordinates();
     window.mainPin.setAddress(window.mainPin.inactiveX, window.mainPin.inactiveY);
+    mainPin.addEventListener('mousedown', onMouseDown);
+    mainPin.addEventListener('keydown', onKeyDown);
   };
 
   window.activation = {

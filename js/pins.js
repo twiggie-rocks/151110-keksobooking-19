@@ -26,8 +26,8 @@
   var removePins = function () {
     var oldPins = document.querySelectorAll('.map__pin');
 
-    for (var n = 1; n < oldPins.length; n++) {
-      oldPins[n].remove();
+    for (var i = 1; i < oldPins.length; i++) {
+      oldPins[i].remove();
     }
   };
 
@@ -39,9 +39,11 @@
 
     removePins();
 
-    for (var i = 0; i < similarOffers.length; i++) {
-      fragment.appendChild(createPin(similarOffers[i]));
-    }
+    similarOffers.forEach(function (oneOffer) {
+      if (oneOffer.offer) {
+        fragment.appendChild(createPin(oneOffer));
+      }
+    });
 
     mapPins.appendChild(fragment);
 
@@ -49,8 +51,25 @@
     window.card.getPins(similarOffers);
   };
 
+  // деактивация пина
+
+  var deactivatePin = function () {
+    if (document.querySelector('.map__pin--active')) {
+      document.querySelector('.map__pin--active').classList.remove('map__pin--active');
+    }
+  };
+
+  // активация выбранного пина
+
+  var activatePin = function (activePin) {
+    deactivatePin();
+    activePin.classList.add('map__pin--active');
+  };
+
   window.pins = {
     removePins: removePins,
     renderPins: renderPins,
+    activatePin: activatePin,
+    deactivatePin: deactivatePin
   };
 })();

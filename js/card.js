@@ -66,9 +66,9 @@
     } else {
       cardPhoto.src = currentOffer.offer.photos[0];
 
-      for (var n = 1; n < currentOffer.offer.photos.length; n++) {
+      for (var i = 1; i < currentOffer.offer.photos.length; i++) {
         var newCardPhoto = cardPhoto.cloneNode(true);
-        newCardPhoto.src = currentOffer.offer.photos[n];
+        newCardPhoto.src = currentOffer.offer.photos[i];
         cardPhotos.appendChild(newCardPhoto);
       }
     }
@@ -83,8 +83,22 @@
 
   var hideCard = function () {
     var oldCard = document.querySelector('.map__card');
+
     if (oldCard) {
       oldCard.remove();
+      document.removeEventListener('keydown', onKeydownClose);
+    }
+
+    window.pins.deactivatePin();
+  };
+
+  var onClickClose = function () {
+    hideCard();
+  };
+
+  var onKeydownClose = function (evt) {
+    if (evt.key === ESC_KEY) {
+      hideCard();
     }
   };
 
@@ -101,17 +115,10 @@
 
     map.insertBefore(fragment, mapFilter);
 
-    var cardClose = map.querySelector('.popup__close');
+    var cardClose = document.querySelector('.popup__close');
 
-    cardClose.addEventListener('click', function () {
-      hideCard();
-    });
-
-    document.addEventListener('keydown', function (evt) {
-      if (evt.key === ESC_KEY) {
-        hideCard();
-      }
-    });
+    cardClose.addEventListener('click', onClickClose);
+    document.addEventListener('keydown', onKeydownClose);
   };
 
   // открытие карточки по клику на пин
@@ -123,11 +130,13 @@
     mapPins.forEach(function (pin, index) {
       pin.addEventListener('click', function () {
         renderCard(offers[index]);
+        window.pins.activatePin(pin);
       });
 
       pin.addEventListener('keydown', function (evt) {
         if (evt.key === ENTER_KEY) {
           renderCard(offers[index]);
+          window.pins.activatePin(pin);
         }
       });
     });
@@ -138,4 +147,4 @@
     getPins: getPins,
     hideCard: hideCard
   };
-}());
+})();

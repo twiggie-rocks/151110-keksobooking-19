@@ -74,7 +74,14 @@
 
   adForm.addEventListener('submit', function (evt) {
     evt.preventDefault();
-    window.upload.sendData(new FormData(adForm), window.upload.onSuccess, window.upload.onError);
+    window.upload.sendData(new FormData(adForm), window.upload.uploadSuccessful, window.upload.uploadError);
+  });
+
+  // сброс полей формы
+
+  adForm.addEventListener('reset', function (evt) {
+    evt.preventDefault();
+    window.activation.deactivateWindow();
   });
 
   window.form = {

@@ -7,15 +7,15 @@
   var ESC_KEY = 'Escape';
   var SUCCESS_CODE = 200;
 
-  var sendData = function (data, success, error) {
+  var sendData = function (data, onSuccess, onError) {
     var xhr = new XMLHttpRequest();
     xhr.responseType = 'json';
 
     xhr.addEventListener('load', function () {
       if (xhr.status === SUCCESS_CODE) {
-        success();
+        onSuccess();
       } else {
-        error();
+        onError();
       }
     });
 
@@ -62,20 +62,20 @@
 
   // если сообщение отправлено
 
-  var onSuccess = function () {
+  var uploadSuccessful = function () {
     displayMessage('#success', '.success');
     window.activation.deactivateWindow();
   };
 
   // если произошла ошибка
 
-  var onError = function () {
+  var uploadError = function () {
     displayMessage('#error', '.error');
   };
 
   window.upload = {
     sendData: sendData,
-    onSuccess: onSuccess,
-    onError: onError
+    uploadSuccessful: uploadSuccessful,
+    uploadError: uploadError
   };
 }());
