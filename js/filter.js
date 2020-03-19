@@ -109,13 +109,22 @@
   // итоговая фильтрация и отрисовка пинов
 
   var updatePins = function () {
-    var filteredOffers = window.filter.offers
-      .filter(filterByType)
-      .filter(filterByPrice)
-      .filter(filterByRooms)
-      .filter(filterByGuests)
-      .filter(filterByFeatures)
-      .slice(0, MAX_OFFERS_NUMBER);
+    var filteredOffers = [];
+    var k = 0;
+
+    for (var i = 0; i < window.filter.offers.length; i++) {
+
+      var offer = window.filter.offers[i];
+
+      if (filterByType(offer) && filterByPrice(offer) && filterByRooms(offer) && filterByGuests(offer) && filterByFeatures(offer)) {
+        filteredOffers.push(offer);
+        k++;
+      }
+
+      if (k === MAX_OFFERS_NUMBER) {
+        break;
+      }
+    }
 
     window.pins.renderPins(filteredOffers);
     window.card.hideCard();
